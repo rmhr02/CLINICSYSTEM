@@ -9,116 +9,154 @@
     <style>
         body {
             background-color: #f0f8ff; /* Light blue background */
+            margin: 0;
         }
-        .sidebar {
-            background-color: #aad8e6;
+
+        /* Header Styles */
+        .header {
+            position: fixed; /* Fixed to the top */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px; /* Adjust height as needed */
+            background-color: #20B2AA;
+            color: white;
+            display: flex; /* Flexbox for alignment */
+            align-items: center; /* Center vertically */
+            padding: 0 20px; /* Add padding for spacing */
+            z-index: 1000; /* Ensure it's above the sidebar */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
         }
+
+        .header .logo {
+            width: 50px; /* Adjust logo size */
+            height: auto;
+            margin-right: 10px; /* Space between logo and text */
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        /* Main Content */
+        .container {
+            margin-left: 270px; /* Leave space for the sidebar */
+            margin-top: 100px; /* Leave space for the header */
+            padding: 20px;
+        }
+
         .panel {
             border-radius: 10px;
         }
+
         .panel-heading {
             background-color: #0066cc;
             color: white;
             padding: 10px;
             border-radius: 10px 10px 0 0;
+            margin-top: 20px;
         }
+
         .form-control {
             margin-bottom: 10px;
         }
+
         .btn-primary {
             background-color: #0066cc;
             border: none;
         }
+
         .btn-primary:hover {
             background-color: #004b99;
         }
+
         .error, .text-danger {
             color: red;
-        }
-        .header {
-        background-color: #20B2AA;
-        color: white;
-        padding: 20px;
-        display: flex; /* Use flexbox for alignment */
-        align-items: center; /* Center vertically */
-        justify-content: flex-start;
-        }
-        .logo {
-        width: 70px; /* Adjust logo size */
-        height: auto;
-        margin-right: 10px; /* Add some space between the logo and the text */
-        }
-        .header h1 {
-            display: inline-block;
-            margin-left: 20px;
         }
     </style>
 </head>
 <body>
-<?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $database = "clinic_data";
+    <!-- Include Sidebar -->
+    <?php include 'sidebar.php'; ?>
 
-    $connection = new mysqli($servername, $username, $password, $database);
+    <!-- Header Section -->
+    <div class="header">
+        <img src="images/UDMCLINIC_LOGO.png" alt="Logo" class="logo">
+        <h1>UDM Clinic</h1>
+    </div>
 
-    if ($connection->connect_error) {
-        die("Connection Failed: " . $connection->connect_error);
-    }
-?>
-<!-- Header Section with Logo -->
-<div class= "header d-flex align-items-center"> 
-    <img src="images/UDMCLINIC_LOGO.png" alt="Logo" class="logo">
-    <h1>UDM Clinic</h1>
-</div>
-
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4><span class="glyphicon glyphicon-th"></span> Add New Patient</h4>
-                </div>
-                <div class="panel-body">
-                    <form method="post" action="add_patient_backend.php">
-                        <!-- Personal Details Fields -->
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="LastName" placeholder="Last Name" value="" required>
-                            <input type="text" class="form-control" name="FirstName" placeholder="First Name" value="" required>
-                            <input type="text" class="form-control" name="MiddleInitial" placeholder="Middle Name" value="">
-                            <input type="text" class="form-control" name="Sex" placeholder="Sex (M/F)" value="" required>
-                            <input type="number" class="form-control" name="age" placeholder="Age" value="" required>
-                            <input type="text" class="form-control" name="civil_status" placeholder="Civil Status" value="" required>
-                        </div>
-                        <!-- Address and Contact Information -->
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="Address" placeholder="Address" value="" required>
-                            <input type="tel" class="form-control" name="ContactNumber" placeholder="Cellphone Number" pattern="\d{10}" title="Enter a valid 10-digit number" value="" required>
-                            <input type="tel" class="form-control" name="emergency_number" placeholder="Emergency Number" pattern="\d{10}" title="Enter a valid 10-digit number" value="">
-                            <input type="text" class="form-control" name="guardian" placeholder="Parent/Guardian" value="" required>
-                        </div>
-                        <!-- Physical Attributes -->
-                        <div class="form-group">
-                            <input type="number" class="form-control" name="height" placeholder="Height (cm)" value="" required>
-                            <input type="number" class="form-control" name="weight" placeholder="Weight (kg)" value="" required>
-                        </div>
-                        
-                        <!-- Submit Button -->
-                        <button type="submit" name="add_product" class="btn btn-primary btn-block">
-                            <span class="glyphicon glyphicon-plus-sign"></span> Add New Patient 
-                        </button>
-                    </form>
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><span class="glyphicon glyphicon-th"></span> Add New Patient</h4>
+                    </div>
+                    <div class="panel-body">
+                        <form method="post" action="add_patient_backend.php">
+                            <!-- Personal Details Fields -->
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="LastName" placeholder="Last Name" required>
+                                <input type="text" class="form-control" name="FirstName" placeholder="First Name" required>
+                                <input type="text" class="form-control" name="MiddleInitial" placeholder="Middle Name">
+                                <input type="text" class="form-control" name="Sex" placeholder="Sex (M/F)" required>
+                                <input type="number" class="form-control" name="age" placeholder="Age" required>
+                                <input type="text" class="form-control" name="civil_status" placeholder="Civil Status" required>
+                            </div>
+                            <!-- Address and Contact Information -->
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="Address" placeholder="Address" required>
+                                <input type="tel" class="form-control" name="ContactNumber" placeholder="Cellphone Number" pattern="\d{10}" title="Enter a valid 10-digit number" required>
+                                <input type="tel" class="form-control" name="emergency_number" placeholder="Emergency Number" pattern="\d{10}" title="Enter a valid 10-digit number">
+                                <input type="text" class="form-control" name="guardian" placeholder="Parent/Guardian" required>
+                            </div>
+                            <!-- Physical Attributes -->
+                            <div class="form-group">
+                                <input type="number" class="form-control" name="height" placeholder="Height (cm)" required>
+                                <input type="number" class="form-control" name="weight" placeholder="Weight (kg)" required>
+                            </div>
+                            <!-- Year Level -->
+                            <div class="form-group">
+                                <label for="yearLevel">Year Level</label>
+                                <select class="form-control" id="yearLevel" name="yearLevel" required>
+                                    <option value="">Select Year Level</option>
+                                    <option value="1st Year">1st Year</option>
+                                    <option value="2nd Year">2nd Year</option>
+                                    <option value="3rd Year">3rd Year</option>
+                                    <option value="4th Year">4th Year</option>
+                                    <option value="5th Year">5th Year</option>
+                                </select>
+                            </div>
+                            <!-- Special Cases -->
+                            <div class="form-group">
+                                <label for="specialCases">Special Cases</label>
+                                <select class="form-control" id="specialCases" name="specialCases">
+                                    <option value="">Select Special Case</option>
+                                    <option value="Hepa B">Hepa B</option>
+                                    <option value="PWD">PWD</option>
+                                    <option value="Pregnant">Pregnant</option>
+                                    <option value="APL > N">APL > N</option>
+                                    <option value="PTB - Non Compliant">PTB - Non Compliant</option>
+                                    <option value="PTB - Complied">PTB - Complied</option>
+                                    <option value="For APL">For APL</option>
+                                </select>
+                            </div>
+                            <!-- Submit Button -->
+                            <button type="submit" name="add_product" class="btn btn-primary btn-block">
+                                <span class="glyphicon glyphicon-plus-sign"></span> Add New Patient
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Bootstrap JS and dependencies -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
 </html>
