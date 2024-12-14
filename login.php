@@ -58,7 +58,6 @@
     </style>
 </head>
 <body>
-    <?php include 'header.php'; ?>
     <div class="login-container">
         <form class="login-form" method="post" action="loginBackEnd.php">
             <input type="text" name="username" placeholder="Username" required>
