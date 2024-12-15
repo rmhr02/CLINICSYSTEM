@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 14, 2024 at 04:59 PM
+-- Generation Time: Dec 15, 2024 at 05:27 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -49,8 +49,8 @@ INSERT INTO `account` (`id`, `UserName`, `PassWord`) VALUES
 CREATE TABLE `consultations` (
   `ConsultationID` int(11) NOT NULL,
   `PatientID` int(11) NOT NULL,
-  `TimeIn` datetime NOT NULL,
-  `TimeOut` datetime DEFAULT NULL,
+  `TimeIn` time NOT NULL DEFAULT current_timestamp(),
+  `TimeOut` time DEFAULT current_timestamp(),
   `SOAP` text DEFAULT NULL,
   `CreatedAt` datetime DEFAULT current_timestamp(),
   `UpdatedAt` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -61,17 +61,22 @@ CREATE TABLE `consultations` (
   `Assessment` text NOT NULL,
   `Plan` text NOT NULL,
   `PlanDate` date NOT NULL DEFAULT current_timestamp(),
-  `SavedBy` varchar(20) NOT NULL
+  `SavedBy` varchar(20) NOT NULL,
+  `Name` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `consultations`
 --
 
-INSERT INTO `consultations` (`ConsultationID`, `PatientID`, `TimeIn`, `TimeOut`, `SOAP`, `CreatedAt`, `UpdatedAt`, `LastEditedBy`, `Date`, `Subjective`, `Objective`, `Assessment`, `Plan`, `PlanDate`, `SavedBy`) VALUES
-(1, 1, '2024-12-04 10:00:00', '2024-12-04 10:30:00', 'Subjective: Fever\nObjective: High Temp\nAssessment: Possible Flu\nPlan: Rest & meds', '2024-12-04 15:14:17', '2024-12-04 15:14:17', 1, '2024-12-14', '', '', '', '', '2024-12-14', ''),
-(2, 2, '2024-12-04 11:00:00', '2024-12-04 11:20:00', 'Subjective: Fatigue\nObjective: Normal vitals\nAssessment: Stress\nPlan: Rest', '2024-12-04 15:14:17', '2024-12-04 15:14:17', 2, '2024-12-14', '', '', '', '', '2024-12-14', ''),
-(3, 7, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, '2024-12-14 23:21:36', '2024-12-14 23:21:36', NULL, '2024-12-14', 'dsadsa', 'dsadsadsa', 'dsadsad', 'dsadsadsad', '2024-12-22', 'Doc');
+INSERT INTO `consultations` (`ConsultationID`, `PatientID`, `TimeIn`, `TimeOut`, `SOAP`, `CreatedAt`, `UpdatedAt`, `LastEditedBy`, `Date`, `Subjective`, `Objective`, `Assessment`, `Plan`, `PlanDate`, `SavedBy`, `Name`) VALUES
+(1, 1, '10:00:00', '10:30:00', 'Subjective: Fever\nObjective: High Temp\nAssessment: Possible Flu\nPlan: Rest & meds', '2024-12-04 15:14:17', '2024-12-04 15:14:17', 1, '2024-12-14', '', '', '', '', '2024-12-14', '', ''),
+(2, 2, '11:00:00', '11:20:00', 'Subjective: Fatigue\nObjective: Normal vitals\nAssessment: Stress\nPlan: Rest', '2024-12-04 15:14:17', '2024-12-04 15:14:17', 2, '2024-12-14', '', '', '', '', '2024-12-14', '', ''),
+(3, 7, '00:00:00', '00:00:00', NULL, '2024-12-14 23:21:36', '2024-12-14 23:21:36', NULL, '2024-12-14', 'dsadsa', 'dsadsadsa', 'dsadsad', 'dsadsadsad', '2024-12-22', 'Doc', ''),
+(12, 6, '11:30:00', '11:30:00', NULL, '2024-12-15 11:30:36', '2024-12-15 11:30:36', NULL, '2024-12-15', 'sadsadsa', 'dasdsadasd', 'dasdsadasda', 'dasdadsadsa', '2024-12-19', 'Doc', ''),
+(15, 1, '11:38:00', '12:38:00', NULL, '2024-12-15 11:39:00', '2024-12-15 11:39:00', NULL, '2024-12-15', 'cancer', 'cancer', 'cancer', '', '2024-12-19', 'Doc', ''),
+(16, 1, '11:39:00', '12:39:00', NULL, '2024-12-15 11:39:38', '2024-12-15 11:39:38', NULL, '2024-12-15', 'cancer', 'cancer', 'cancer', 'cancer', '2024-12-20', 'Doc', ''),
+(18, 2, '01:44:00', '12:45:00', NULL, '2024-12-15 11:44:47', '2024-12-15 11:44:47', NULL, '2024-12-05', 'dsadsad', 'dsadsadas', 'dsadsad', 'dsadsadsa', '2024-12-25', 'Doc', '');
 
 -- --------------------------------------------------------
 
@@ -108,7 +113,8 @@ INSERT INTO `patients` (`PatientID`, `FirstName`, `LastName`, `MiddleInitial`, `
 (1, 'John', 'Doe', '', 'M', '1990-05-15', '123 Main St', '1234567890', '2024-12-04 15:04:54', '2024-12-04 15:04:54', 0, '', '', '', '', '', '', ''),
 (2, 'Jane', 'Smith', '', 'F', '1985-03-22', '456 Elm St', '0987654321', '2024-12-04 15:04:54', '2024-12-04 15:04:54', 0, '', '', '', '', '', '', ''),
 (6, 'Khen', 'Abesamis', 'Imperial', 'M', '0000-00-00', '1585 Lawin St', '9454595720', '2024-12-11 22:28:32', '2024-12-11 22:28:32', 21, 'Single', '9454595720', 'Marilou Abesamis', '188', '60', '4th Year', 'Pregnant'),
-(7, 'eduard', 'bicaldo', 'john', 'M', '0000-00-00', '1585 Lawin St', '9454595720', '2024-12-11 22:42:43', '2024-12-11 22:42:43', 64, 'Maried', '9454595720', 'Eduard John Bicaldo', '188', '55', '4th Year', 'Pregnant');
+(7, 'eduard', 'bicaldo', 'john', 'M', '0000-00-00', '1585 Lawin St', '9454595720', '2024-12-11 22:42:43', '2024-12-11 22:42:43', 64, 'Maried', '9454595720', 'Eduard John Bicaldo', '188', '55', '4th Year', 'Pregnant'),
+(8, 'xander', 'alam', 'cruz', 'M', '0000-00-00', '1585 Lawin St', '9454595720', '2024-12-15 12:11:55', '2024-12-15 12:11:55', 55, 'Maried', '9454595720', 'Eduard John Bicaldo', '188', '60', '4th Year', 'Hepa B');
 
 -- --------------------------------------------------------
 
@@ -232,13 +238,13 @@ ALTER TABLE `account`
 -- AUTO_INCREMENT for table `consultations`
 --
 ALTER TABLE `consultations`
-  MODIFY `ConsultationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ConsultationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `patients`
 --
 ALTER TABLE `patients`
-  MODIFY `PatientID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `PatientID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `patientspecialcases`
